@@ -1,5 +1,6 @@
 import requests
 import datetime as dt
+from mbtc.DataAPI import DataAPI
 
 
 class Last24:
@@ -29,17 +30,41 @@ class Last24:
 
 class DaySummary:
 
-    def __init__(self, day, month, year):
-        day_sum = request_day_summary(day, month, year)
-        self.date = day_sum['date']
-        self.opening = day_sum['opening']
-        self.closing = day_sum['closing']
-        self.lowest = day_sum['lowest']
-        self.highest = day_sum['highest']
-        self.volume = day_sum['volume']
-        self.quantity = day_sum['quantity']
-        self.amount = day_sum['amount']
-        self.avg_price = day_sum['avg_price']
+    def __init__(self, date, opening, closing, lowest, highest, volume, quantity, amount, avg_price):
+        self.date = date
+        self.opening = opening
+        self.closing = closing
+        self.lowest = lowest
+        self.highest = highest
+        self.volume = volume
+        self.quantity = quantity
+        self.amount = amount
+        self.avg_price = avg_price
+
+    @staticmethod
+    def from_json(json):
+        date = json['date']
+        opening = json['opening']
+        closing = json['closing']
+        lowest = json['lowest']
+        highest = json['highest']
+        volume = json['volume']
+        quantity = json['quantity']
+        amount = json['amount']
+        avg_price = json['avg_price']
+
+        return DaySummary(date, opening, closing, lowest, highest, volume, quantity, amount, avg_price)
+
+    @staticmethod
+    def request(coin, day=None, month=None, year=None):
+
+        if all(v is not None for v in [day, month, year]):
+            params = "/" + year + "/" + month + "/" + day
+        else:
+            params = None
+
+        resp = DataAPI.request_data(coin, "day-summary", params)
+        return resp
 
     def __str__(self):
         saida = "Day Summary from " + str(self.date) + ":"
@@ -52,46 +77,8 @@ class DaySummary:
         return saida
 
 
-def request_day_summary(day, month, year):
-    """
-    Given dat, month and year, returns json with full-day data
-    :param day: int
-    :param month: int
-    :param year: int
-    :return: json data as example
-    {
-    'date': '2013-06-20',
-    'opening': 262.99999,
-    'closing': 269.0,
-    'lowest': 260.00002,
-    'highest': 269.0,
-    'volume': 7253.1336356785,
-    'quantity': 27.11390588,
-    'amount': 28,
-    'avg_price': 267.5060416518087
-    }
-    """
-    url = 'https://www.mercadobitcoin.net/api/coin/day-summary/' + year + '/' + month + '/' + day + '/'
-    req = requests.get(url)
-    return req.json()
-
-
-def request_last_24h():
-    """
-    :return: json data as example from the last 24h
-    {
-    'ticker': {
-        'high': 14481.47000000,
-        'low': 13706.00002000,
-        'vol': 443.73564488,
-        'last': 14447.01000000,
-        'buy': 14447.00100000,
-        'sell': 14447.01000000,
-        'date': 1502977646
-    }
-    }
-    """
-    COIN = 'BTC'
+def request_last_24h(coin):
+    COIN = coin
     METHOD = 'ticker'
     url = 'https://www.mercadobitcoin.net/api/' + COIN + '/' + METHOD + '/'
     req = requests.get(url)

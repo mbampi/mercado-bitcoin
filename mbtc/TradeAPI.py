@@ -2,7 +2,8 @@
 from mbtc import config
 
 
-class Request:
+class TradeAPI:
+
     # Constants
     REQUEST_PATH = '/tapi/v3/'
     MB_TAPI_SECRET = config.MB_TAPI_SECRET
