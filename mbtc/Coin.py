@@ -1,7 +1,5 @@
-from enum import Enum
 
-
-class Coin(Enum):
+class Coin:
     Bitcoin = 'BTC'
     Litecoin = 'LTC'
     BCash = 'BCH'
@@ -9,7 +7,7 @@ class Coin(Enum):
     Ethereum = 'ETH'
 
 
-class CoinPair(Enum):
+class CoinPair:
     Real_Bitcoin = 'BRLBTC'
     Real_Litecoin = 'BRLLTC'
     Real_BCash = 'BRLBCH'

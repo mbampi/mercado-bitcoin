@@ -1,4 +1,3 @@
-
 import requests
 
 
@@ -7,12 +6,12 @@ class DataAPI:
     @staticmethod
     def __request(coin, method, params=None):
         url = 'https://www.mercadobitcoin.net/api'
-        url += '/' + coin + '/' + method
+        url += '/' + str(coin) + '/' + method
         if params is not None:
             url += '/' + params
 
         response = requests.get(url)
-        return response.json()
+        return response
 
     @staticmethod
     def ticker(coin):
@@ -28,29 +27,22 @@ class DataAPI:
 
     @staticmethod
     def trades(coin, since_id=None, from_timestamp=None, to_timestamp=None):
-        method = 'orderbook'
+        method = 'trades'
         params = None
 
-        # Check parameters
         if since_id is not None:
-            params = "?since=" + since_id
+            params = "?since=" + str(since_id)
         elif from_timestamp is not None:
-            params = from_timestamp
+            params = str(from_timestamp)
             if to_timestamp is not None:
-                params += '/' + to_timestamp
+                params += '/' + str(to_timestamp)
 
         resp = DataAPI.__request(coin, method, params)
         return resp
 
     @staticmethod
-    def day_summary(coin, day=None, month=None, year=None):
+    def day_summary(coin, year, month, day):
         method = "day-summary"
-
-        # Check parameters
-        if None not in [day, month, year]:
-            params = year + "/" + month + "/" + day
-        else:
-            params = None
-
+        params = str(year) + '/' + str(month) + '/' + str(day)
         resp = DataAPI.__request(coin, method, params)
         return resp
