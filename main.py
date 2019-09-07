@@ -1,10 +1,13 @@
 
 from mbtc import DataAPI
+from mbtc import TradeAPI
 from mbtc.Constants import Coin
+import config
 
 import time
 from datetime import timedelta, date
 import datetime as dt
+import json
 
 import pandas as pd
 import matplotlib.dates as mdates
@@ -27,6 +30,10 @@ def bitcoin_history(start_date, end_date):
         df.loc[len(df)] = list(btc_day)
         time.sleep(1)
     return df
+    # start = date(2017, 1, 1)
+    # end = date.today()
+    # df = bitcoin_history(start, end)
+    # df.to_csv("bitcoin_daily" + ".csv")
 
 
 def plot_candlestick(dataframe):
@@ -44,18 +51,20 @@ def plot_candlestick(dataframe):
     plt.gcf().autofmt_xdate()
     plt.autoscale(tight=True)
     plt.show()
+    # df = pd.read_csv("bitcoin_daily" + ".csv", index_col=0)
+    # plot_candlestick(df)
 
 
 if __name__ == "__main__":
-    print("Bitcoin DataAPI")
+    print("Bitcoin Robot")
 
-    # start = date(2017, 1, 1)
-    # end = date.today()
-    # df = bitcoin_history(start, end)
-    # df.to_csv("bitcoin_daily" + ".csv")
+    TAPI_ID = config.MB_TAPI_ID
+    TAPI_SECRET = config.MB_TAPI_SECRET
+    tapi = TradeAPI(TAPI_ID, TAPI_SECRET)
 
-    # df = pd.read_csv("bitcoin_daily" + ".csv", index_col=0)
-    # plot_candlestick(df)
+    info = tapi.get_account_info()
+    print(json.dumps(info, indent=2))
+
 
 
 

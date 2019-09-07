@@ -24,7 +24,7 @@ class TradeAPI:
     def __generate_mac(self, params):
         params_string = self.REQUEST_PATH + '?' + params
         h = hmac.new(self.MB_TAPI_SECRET, digestmod=hashlib.sha512)
-        h.update(params_string)
+        h.update(params_string.encode('utf-8'))
         tapi_mac = h.hexdigest()
         return tapi_mac
 
@@ -70,6 +70,9 @@ class TradeAPI:
         return response
 
     def get_account_info(self):
+        """
+        :return: String json response
+        """
         tapi_nonce = self.__generate_nonce()
         method_params = {
             'tapi_method': 'get_account_info',
