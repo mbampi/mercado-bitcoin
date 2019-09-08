@@ -5,12 +5,12 @@ from mbtc.Constants import Coin
 import config
 
 import time
+from datetime import datetime
 from datetime import timedelta, date
-import datetime as dt
-import json
 
-import pandas as pd
-import matplotlib.dates as mdates
+import json
+from pandas import DataFrame
+from matplotlib.dates import DateFormatter, date2num
 import matplotlib.pyplot as plt
 from mpl_finance import candlestick_ohlc
 from pandas.plotting import register_matplotlib_converters
@@ -23,8 +23,8 @@ def date_range(start_date, end_date):
 
 
 def bitcoin_history(start_date, end_date):
-    df = pd.DataFrame(columns=['date', 'opening', 'closing', 'lowest', 'highest',
-                               'volume', 'quantity', 'amount', 'avg_price'])
+    df = DataFrame(columns=['date', 'opening', 'closing', 'lowest', 'highest',
+                            'volume', 'quantity', 'amount', 'avg_price'])
     for d in date_range(start_date, end_date):
         btc_day = DataAPI.day_summary(Coin.Bitcoin, d.year, d.month, d.day).json().values()
         df.loc[len(df)] = list(btc_day)
@@ -33,11 +33,11 @@ def bitcoin_history(start_date, end_date):
     # start = date(2017, 1, 1)
     # end = date.today()
     # df = bitcoin_history(start, end)
-    # df.to_csv("bitcoin_daily" + ".csv")
+    # df.to_csv("data/bitcoin_daily" + ".csv")
 
 
 def plot_candlestick(dataframe):
-    dataframe['date'] = [mdates.date2num(dt.datetime.strptime(d, '%Y-%m-%d').date()) for d in dataframe['date']]
+    dataframe['date'] = [date2num(datetime.strptime(d, '%Y-%m-%d').date()) for d in dataframe['date']]
     quotes = [tuple(x) for x in dataframe[['date', 'opening', 'highest', 'lowest', 'closing']].values]
 
     fig, ax = plt.subplots()
@@ -47,11 +47,11 @@ def plot_candlestick(dataframe):
     plt.title('Bitcoin')
 
     ax.xaxis_date()
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
+    ax.xaxis.set_major_formatter(DateFormatter("%Y-%m-%d"))
     plt.gcf().autofmt_xdate()
     plt.autoscale(tight=True)
     plt.show()
-    # df = pd.read_csv("bitcoin_daily" + ".csv", index_col=0)
+    # df = pd.read_csv("data/bitcoin_daily" + ".csv", index_col=0)
     # plot_candlestick(df)
 
 
