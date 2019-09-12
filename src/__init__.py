@@ -1,8 +1,8 @@
 
 """ Mercado Bitcoin API Client for Python """
 
-from mbtc.DataAPI import DataAPI
-from mbtc.TradeAPI import TradeAPI
+from src.DataAPI import DataAPI
+from src.TradeAPI import TradeAPI
 
 __author__ = 'mbampi'
 __version__ = '1.0'

@@ -1,6 +1,119 @@
 # Mercado Bitcoin API Client for Python
 
-### Data API (API de Dados)
+API Client in Python for Mercado Bitcoin
+
+## Installation
+
+Run the following to install:
+```python
+    pip install mercado-bitcoin
+```
+
+## Usage
+
+### Data API
+```python
+from mercado-bitcoin import DataAPI
+import json
+
+resp = DataAPI.day_summary('BTC', 2019, 9, 11).json()
+print(json.dumps(resp, indent=2))
+```
+Response:
+```json
+{
+  "date": "2019-09-11",
+  "opening": 41772.12033,
+  "closing": 41496.86984,
+  "lowest": 41200,
+  "highest": 41955.55,
+  "volume": 11179626.56206287,
+  "quantity": 269.18932163,
+  "amount": 7917,
+  "avg_price": 41530.72081153
+}
+```
+
+### Trade API
+```python
+from mercado-bitcoin import TradeAPI
+import json
+
+TAPI_ID = <your_tapi_id>
+TAPI_SECRET = <your_tapi_secret>
+tapi = TradeAPI(TAPI_ID, TAPI_SECRET)
+
+info = tapi.get_account_info()
+print(json.dumps(info, indent=2))
+```
+Response
+```json
+{
+  "response_data": {
+    "balance": {
+      "brl": {
+        "available": "0.00000000",
+        "total": "0.00000000"
+      },
+      "btc": {
+        "available": "0.00000000",
+        "total": "0.00000000",
+        "amount_open_orders": 0
+      },
+      "ltc": {
+        "available": "0.00000000",
+        "total": "0.00000000",
+        "amount_open_orders": 0
+      },
+      "bch": {
+        "available": "0.00000000",
+        "total": "0.00000000",
+        "amount_open_orders": 0
+      },
+      "xrp": {
+        "available": "0.00000000",
+        "total": "0.00000000",
+        "amount_open_orders": 0
+      },
+      "eth": {
+        "available": "0.00000000",
+        "total": "0.00000000",
+        "amount_open_orders": 0
+      }
+    },
+    "withdrawal_limits": {
+      "brl": {
+        "available": "20000.00",
+        "total": "20000.00"
+      },
+      "btc": {
+        "available": "10.00000000",
+        "total": "10.00000000"
+      },
+      "ltc": {
+        "available": "500.00000000",
+        "total": "500.00000000"
+      },
+      "bch": {
+        "available": "25.00000000",
+        "total": "25.00000000"
+      },
+      "xrp": {
+        "available": "20000.00000000",
+        "total": "20000.00000000"
+      },
+      "eth": {
+        "available": "70.00000000",
+        "total": "70.00000000"
+      }
+    }
+  },
+  "status_code": 100,
+  "server_unix_timestamp": "1568299534"
+}
+```
+
+## Data API (API de Dados)
 
 O acesso à API de Dados é público, não é necessário criar uma conta tampouco autenticar.
 
