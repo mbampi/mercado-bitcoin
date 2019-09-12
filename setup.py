@@ -13,9 +13,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     keywords=['bitcoin', 'trade', 'data', 'finance'],
     url="https://github.com/mbampi/mercado-bitcoin",
-    install_requires=['requests'],
+    install_requires=['requests', 'urllib3'],
     packages=setuptools.find_packages(),
-    package_dir={'': 'src'},
     classifiers=[
         'Development Status :: 4 - Beta'
         'Intended Audience :: Developers'
