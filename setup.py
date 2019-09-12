@@ -13,6 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     keywords=['bitcoin', 'trade', 'data', 'finance'],
     url="https://github.com/mbampi/mercado-bitcoin",
+    download_url="https://github.com/mbampi/mercado-bitcoin/archive/v1.0.0.tar.gz",
     install_requires=['requests', 'urllib3'],
     packages=setuptools.find_packages(),
     classifiers=[

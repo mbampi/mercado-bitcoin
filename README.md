@@ -13,7 +13,7 @@ Run the following to install:
 
 ### Data API
 ```python
-from mercado-bitcoin import DataAPI
+from mercado_bitcoin import DataAPI
 import json
 
 resp = DataAPI.day_summary('BTC', 2019, 9, 11).json()
@@ -36,7 +36,7 @@ Response:
 
 ### Trade API
 ```python
-from mercado-bitcoin import TradeAPI
+from mercado_bitcoin import TradeAPI
 import json
 
 TAPI_ID = <your_tapi_id>
