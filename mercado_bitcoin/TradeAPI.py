@@ -22,7 +22,7 @@ class TradeAPI:
 
     def __generate_mac(self, params):
         params_string = self.REQUEST_PATH + '?' + params
-        h = hmac.new(self.MB_TAPI_SECRET, digestmod=hashlib.sha512)
+        h = hmac.new(self.MB_TAPI_SECRET.encode('utf-8'), digestmod=hashlib.sha512)
         h.update(params_string.encode('utf-8'))
         tapi_mac = h.hexdigest()
         return tapi_mac
