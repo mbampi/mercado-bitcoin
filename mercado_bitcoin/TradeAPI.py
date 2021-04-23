@@ -14,7 +14,7 @@ class TradeAPI:
         self.MB_TAPI_SECRET = tapi_secret
         self.REQUEST_HOST = 'www.mercadobitcoin.net'
         self.REQUEST_PATH = '/tapi/v3/'
-        self.use_HTTPS = https
+        self.use_HTTPS = use_https
 
     @staticmethod
     def __generate_nonce():
