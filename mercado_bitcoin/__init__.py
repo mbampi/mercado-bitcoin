@@ -5,7 +5,7 @@ from mercado_bitcoin.DataAPI import DataAPI
 from mercado_bitcoin.TradeAPI import TradeAPI
 
 __author__ = 'mbampi'
-__version__ = '1.0'
+__version__ = '1.0.1'
 
 
 """
