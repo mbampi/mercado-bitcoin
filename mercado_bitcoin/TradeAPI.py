@@ -9,11 +9,12 @@ from collections import OrderedDict
 
 class TradeAPI:
 
-    def __init__(self, tapi_id, tapi_secret):
+    def __init__(self, tapi_id, tapi_secret, use_https=True):
         self.MB_TAPI_ID = tapi_id
         self.MB_TAPI_SECRET = tapi_secret
         self.REQUEST_HOST = 'www.mercadobitcoin.net'
         self.REQUEST_PATH = '/tapi/v3/'
+        self.use_HTTPS = https
 
     @staticmethod
     def __generate_nonce():
@@ -37,13 +38,15 @@ class TradeAPI:
 
     def __request(self, params, headers):
         try:
-            conn = http.client.HTTPSConnection(self.REQUEST_HOST)
+            if (self.use_HTTPS):
+                conn = http.client.HTTPSConnection(self.REQUEST_HOST)
+            else:
+                conn = http.client.HTTPConnection(self.REQUEST_HOST)
             conn.request("POST", self.REQUEST_PATH, params, headers)
 
             response = conn.getresponse()
             response = response.read()
 
-            # É fundamental utilizar a classe OrderedDict para preservar a ordem dos elementos
             response_json = json.loads(response, object_pairs_hook=OrderedDict)
         finally:
             if conn:
